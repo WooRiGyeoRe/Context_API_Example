@@ -1,5 +1,5 @@
-import React from "react";
-// import ColorConsumer from "../contexts/color";
+import React, { Component } from "react";
+import ColorContext from "../contexts/color"; // 정확한 경로로 수정
 
 const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
 
@@ -9,14 +9,14 @@ const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
 class SelectColors extends Component {
   static contextType = ColorContext;
 
-  // SetColor, SetSubcolor 호출하려면?
+  // SetColor, SetSubColor 호출하려면?
   handleSetColor = (color) => {
     // this.context 조회 -> 현재 Context의 value를 가르킴
     this.context.actions.setColor(color);
   };
 
-  handleSetSubcolor = (subcolor) => {
-    this.context.actions.setSubcolor(subcolor);
+  handleSetSubColor = (subColor) => {
+    this.context.actions.setSubColor(subColor);
   };
 
   render() {
@@ -32,6 +32,17 @@ class SelectColors extends Component {
                 width: "24px",
                 height: "24px",
                 cursor: "pointer",
+              }}
+              onClick={() => {
+                console.log("왼쪽 마우스 클릭:", color); // 왼쪽 클릭 시 찍히는 값
+                // actions.setColor(color);
+                this.handleSetColor(color);
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault(); // 마우스 오른쪽 버튼 클릭 시 기본 메뉴 방지
+                console.log("오른쪽 마우스 클릭:", color); // 오른쪽 클릭 시 찍히는 값
+                // actions.setSubColor(color);
+                this.handleSetSubColor(color);
               }}
             />
           ))}
